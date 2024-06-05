@@ -1,4 +1,5 @@
 
+
 import pydicom
 
 
@@ -7,15 +8,13 @@ def json_to_dcm(tags_dict) -> pydicom.Dataset:
     for key, value in tags_dict.items():
         if key.endswith("Sequence"):
             if isinstance(value, dict):
-                values = [json_to_dcm(value)]
+                value = [json_to_dcm(value)]
             elif isinstance(value, list):
-                values = [json_to_dcm(v) for v in value]
+                value = [json_to_dcm(v) for v in value]
             else:
                 print("Wrong tags.")
                 continue
-            dataset.__setattr__(key, values)
-        else:
-            dataset.__setattr__(key, value)
+        dataset.__setattr__(key, value)
     return dataset
 
 
