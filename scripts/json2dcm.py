@@ -4,7 +4,6 @@ Convert a json file into a DICOM.
 Usage:
 python json2dcm.py path/to/file.json
 
-
 Example:
 json_content = {
     "ValueType": "CONTAINER",
