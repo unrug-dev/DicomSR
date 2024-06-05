@@ -31,7 +31,8 @@ import json
 
 
 
-def _json_to_base_dicom(tags_dict):
+def _json_to_base_dicom(tags_dict: dict) -> pydicom.Dataset:
+    """ Initialize an base DICOM with a file meta dataset"""
     file_meta = pydicom.FileMetaDataset()
     file_meta.MediaStorageSOPClassUID = tags_dict["SOPClassUID"]
     file_meta.MediaStorageSOPInstanceUID = tags_dict["SOPInstanceUID"]
@@ -42,8 +43,9 @@ def _json_to_base_dicom(tags_dict):
     )
     file_meta.TransferSyntaxUID = "ExplicitVRLittleEndian"
     file_meta.FileMetaInformationGroupLength = len(file_meta)
-    dcm = FileDataset(BytesIO(), {}, file_meta=file_meta, preamble=b"\0" * 128)
-    return dcm
+    dicom = FileDataset(BytesIO(), {}, file_meta=file_meta, preamble=b"\0" * 128)
+    validate_file_meta(file_meta=dicom.file_meta, enforce_standard=True)    
+    return dicom
 
 
 def _json_to_dataset(
@@ -66,14 +68,14 @@ def _json_to_dataset(
 
 
 def json_to_dicom(tags_dict) -> pydicom.Dataset:
-    dcm = _json_to_base_dicom(tags_dict)
-    dcm = _json_to_dataset(tags_dict, dcm)
-    validate_file_meta(file_meta=dcm.file_meta, enforce_standard=True)
-    return dcm
+    dicom = _json_to_base_dicom(tags_dict)
+    dicom = _json_to_dataset(tags_dict, dicom)
+    validate_file_meta(file_meta=dicom.file_meta, enforce_standard=True)
+    return dicom
     
 
 if __name__ == "__main__":
     with open(sys.argv[0]) as f:
         json_dcm = json.load(f)
-    dcm = json_to_dcm(json_dcm)
-    dcm.save_as(sys.argv[1] + ".dcm")
+    dicom = json_to_dicom(json_dcm)
+    dicom.save_as(sys.argv[1] + ".dcm")
