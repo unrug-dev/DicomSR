@@ -1,4 +1,6 @@
 """
+Convert a json file into a DICOM. 
+
 Usage:
 python json2dcm.py path/to/file.json
 
@@ -32,7 +34,7 @@ import json
 
 
 def _json_to_base_dicom(tags_dict: dict) -> pydicom.Dataset:
-    """ Initialize an base DICOM with a file meta dataset"""
+    """ Initialize an base DICOM with a file meta dataset."""
     file_meta = pydicom.FileMetaDataset()
     file_meta.MediaStorageSOPClassUID = tags_dict["SOPClassUID"]
     file_meta.MediaStorageSOPInstanceUID = tags_dict["SOPInstanceUID"]
@@ -52,6 +54,7 @@ def _json_to_dataset(
     tags_dict,
     dataset: Optional[pydicom.Dataset] = None,
 ) -> pydicom.Dataset:
+    """Complete or create a dataset from a recursive dictionnary of DICOM tags."""
     if dataset is None:
         dataset = pydicom.Dataset()
     for key, value in tags_dict.items():
@@ -68,6 +71,7 @@ def _json_to_dataset(
 
 
 def json_to_dicom(tags_dict) -> pydicom.Dataset:
+    """Create a DICOM from a recursive dictionnary of DICOM tags."""    
     dicom = _json_to_base_dicom(tags_dict)
     dicom = _json_to_dataset(tags_dict, dicom)
     validate_file_meta(file_meta=dicom.file_meta, enforce_standard=True)
