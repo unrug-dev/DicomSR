@@ -1,4 +1,7 @@
-
+"""
+Usage:
+python json2dcm.py path/to/file.json
+"""
 
 import pydicom
 
