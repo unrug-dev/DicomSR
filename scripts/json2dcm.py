@@ -1,9 +1,32 @@
 """
 Usage:
 python json2dcm.py path/to/file.json
+
+
+Example:
+json_dicom = {
+    "ValueType": "CONTAINER",
+    "ContributingEquipmentSequence": {
+        "CodeValue": 126000,
+        "CodingSchemeDesignator": "DCM",
+        "CodeMeaning": "Imaging Measurement Report",
+    },
+    "ContentSequence": [
+        {
+            "RelationshipType": "HAS CONCEPT MOD",
+            "ValueType": "CODE",
+        },
+        {
+            "RelationshipType": "CONTAINS",
+            "ValueType": "CONTAINER",
+        },
+    ],
+}
+dicom = json_to_dcm(json_dicom)
 """
 
 import pydicom
+import sys
 
 
 def json_to_dcm(tags_dict) -> pydicom.Dataset:
@@ -22,22 +45,5 @@ def json_to_dcm(tags_dict) -> pydicom.Dataset:
 
 
 if __name__ == "__main__":
-    tags_dict = {
-        "ValueType": "CONTAINER",
-        "ContributingEquipmentSequence": {
-            "CodeValue": 126000,
-            "CodingSchemeDesignator": "DCM",
-            "CodeMeaning": "Imaging Measurement Report",
-        },
-        "ContentSequence": [
-            {
-                "RelationshipType": "HAS CONCEPT MOD",
-                "ValueType": "CODE",
-            },
-            {
-                "RelationshipType": "CONTAINS",
-                "ValueType": "CONTAINER",
-            },
-        ],
-    }
-    ds = json_to_dcm(tags_dict)
+    dcm = json_to_dcm(sys.argv[1])
+    dcm.save_as(sys.argv[1] + ".dcm")
