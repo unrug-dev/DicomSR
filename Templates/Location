@@ -1,12 +1,12 @@
 This is a custom dcmdump of a Dicom Structured Report.
-It allows viewers to displays angles on a referenced source dicom with this tags:
+This SR example allows viewers to displays box and pathologies on a referenced source dicom with this tags:
 
 - StudyInstanceUID=1.2.826.0.1.3680043.2.406.337548.1.64434.1.210216104642
 - SeriesInstanceUID=1.2.392.200036.9107.307.13025.1302521021626950.121
 - SOPInstanceUID=1.2.392.200036.9107.307.13025.20210216.113049.1062114
 - SOPClassUID=1.2.840.10008.5.1.4.1.1.1.1
 
-This profile (AIR) has been validated during the IHE connectathon 2024.
+This profile (AIR) has been validated during the IHE connectathon 2024, according to the TID 1500, TID 1400 and TID 1410.
 
 ---------------------------
 UL (0002, 0000) FileMetaInformationGroupLength          	216
