@@ -22,7 +22,7 @@ json_content = {
         },
     ],
 }
-dicom = json_to_dcm(json_content)
+dicom = _json_to_dataset(json_content)
 """
 
 import pydicom
@@ -30,20 +30,47 @@ import sys
 import json
 
 
-def json_to_dcm(tags_dict) -> pydicom.Dataset:
-    dataset = pydicom.Dataset()
+
+def _json_to_base_dicom(tags_dict):
+    file_meta = pydicom.FileMetaDataset()
+    file_meta.MediaStorageSOPClassUID = tags_dict["SOPClassUID"]
+    file_meta.MediaStorageSOPInstanceUID = tags_dict["SOPInstanceUID"]
+    file_meta.ImplementationClassUID = tags_dict.pop("ImplementationClassUID")
+    file_meta.ImplementationVersionName = tags_dict.pop("ImplementationVersionName")
+    file_meta.SourceApplicationEntityTitle = tags_dict.pop(
+        "SourceApplicationEntityTitle"
+    )
+    file_meta.TransferSyntaxUID = "ExplicitVRLittleEndian"
+    file_meta.FileMetaInformationGroupLength = len(file_meta)
+    dcm = FileDataset(BytesIO(), {}, file_meta=file_meta, preamble=b"\0" * 128)
+    return dcm
+
+
+def _json_to_dataset(
+    tags_dict,
+    dataset: Optional[pydicom.Dataset] = None,
+) -> pydicom.Dataset:
+    if dataset is None:
+        dataset = pydicom.Dataset()
     for key, value in tags_dict.items():
         if key.endswith("Sequence"):
             if isinstance(value, dict):
-                value = [json_to_dcm(value)]
+                value = [json_to_dataset(value)]
             elif isinstance(value, list):
-                value = [json_to_dcm(v) for v in value]
+                value = [json_to_dataset(v) for v in value]
             else:
                 print("Wrong tags.")
                 continue
         dataset.__setattr__(key, value)
     return dataset
 
+
+def json_to_dicom(tags_dict) -> pydicom.Dataset:
+    dcm = _json_to_base_dicom(tags_dict)
+    dcm = _json_to_dataset(tags_dict, dcm)
+    validate_file_meta(file_meta=dcm.file_meta, enforce_standard=True)
+    return dcm
+    
 
 if __name__ == "__main__":
     with open(sys.argv[0]) as f:
