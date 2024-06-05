@@ -4,7 +4,7 @@ python json2dcm.py path/to/file.json
 
 
 Example:
-json_dicom = {
+json_content = {
     "ValueType": "CONTAINER",
     "ContributingEquipmentSequence": {
         "CodeValue": 126000,
@@ -22,7 +22,7 @@ json_dicom = {
         },
     ],
 }
-dicom = json_to_dcm(json_dicom)
+dicom = json_to_dcm(json_content)
 """
 
 import pydicom
