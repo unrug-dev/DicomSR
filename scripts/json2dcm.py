@@ -27,6 +27,7 @@ dicom = json_to_dcm(json_dicom)
 
 import pydicom
 import sys
+import json
 
 
 def json_to_dcm(tags_dict) -> pydicom.Dataset:
@@ -45,5 +46,7 @@ def json_to_dcm(tags_dict) -> pydicom.Dataset:
 
 
 if __name__ == "__main__":
-    dcm = json_to_dcm(sys.argv[1])
+    with open(sys.argv[0]) as f:
+        json_dcm = json.load(f)
+    dcm = json_to_dcm(json_dcm)
     dcm.save_as(sys.argv[1] + ".dcm")
