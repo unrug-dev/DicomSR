@@ -60,8 +60,6 @@ SH (0008, 0102) 				CodingSchemeDesignator                  	DCM
 LO (0008, 0104) 				CodeMeaning                             	Processing Equipment
 UI (0020, 000d) StudyInstanceUID                        	1.2.826.0.1.3680043.2.406.337548.1.64434.1.210216104642
 UI (0020, 000e) SeriesInstanceUID                       	1.2.826.0.1.3680043.10.457.6672698541066975203623768565998942858
-/home/jeanu/miniconda3/envs/milvor/lib/python3.9/site-packages/pydicom/valuerep.py:443: UserWarning: The value length (64) exceeds the maximum length of 16 allowed for VR SH.
-  warnings.warn(msg)
 SH (0020, 0010) StudyID                                 	4b34b3a721d32986360a3f2a3e69a9b7b463587ff8448938e54888af690180ea
 IS (0020, 0011) SeriesNumber                            	51
 IS (0020, 0013) InstanceNumber                          	2
