@@ -33,7 +33,7 @@ import json
 
 
 def _json_to_base_dicom(tags_dict: dict) -> pydicom.Dataset:
-    """ Initialize an base DICOM with a file meta dataset."""
+    """ Initialize a base DICOM with a file meta dataset."""
     file_meta = pydicom.FileMetaDataset()
     file_meta.MediaStorageSOPClassUID = tags_dict["SOPClassUID"]
     file_meta.MediaStorageSOPInstanceUID = tags_dict["SOPInstanceUID"]
