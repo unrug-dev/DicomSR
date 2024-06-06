@@ -9,6 +9,7 @@ This SR example allows viewers to displays angles on a referenced source dicom w
 
 This profile (AIR) has been validated during the IHE connectathon 2024, according to the TID 1500, TID 1400 and TID 1410 
 and can be displayed by viewer, but it can still contains errors.
+Please contact me if you want to display other measures like non-intersected arm of angles, length, etc...
 
 ---------------------------
 UL (0002, 0000) FileMetaInformationGroupLength          	216
