@@ -1,6 +1,6 @@
 """
 Usage:
-python custom_dcmdump.py path/to/dicom.dcm"
+python prettydump.py path/to/dicom.dcm"
 """
 
 import pydicom
