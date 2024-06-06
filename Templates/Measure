@@ -6,7 +6,10 @@ This SR example allows viewers to displays angles on a referenced source dicom w
 - SOPInstanceUID=1.2.392.200036.9107.307.13025.20210216.113049.1062114
 - SOPClassUID=1.2.840.10008.5.1.4.1.1.1.1
 
-This profile (AIR) has been validated during the IHE connectathon 2024, according to the TID 1500, TID 1400 and TID 1410.
+
+This profile (AIR) has been validated during the IHE connectathon 2024, according to the TID 1500, TID 1400 and TID 1410 
+and can be displayed by viewer, but it can still contains errors.
+
 ---------------------------
 UL (0002, 0000) FileMetaInformationGroupLength          	216
 OB (0002, 0001) FileMetaInformationVersion              	
